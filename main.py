@@ -1,15 +1,13 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+from widgets.gui.WeatherGUI import WeatherGUI 
 
 # Function for executing application
 def main():
 
     app = QApplication([])
-    window = QWidget()
-    window.setWindowTitle("Weather App")
-    window.setWindowIcon(QIcon("weather_logo.png"))
-    window.show()
-
+    main_window = WeatherGUI()
+    main_window.show()
     app.exec()
 
 # Main file for handling software interactions
