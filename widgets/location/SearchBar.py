@@ -4,9 +4,9 @@ from PyQt5.QtGui import QIcon
 
 # Widget for searching for a location
 class SearchWidget(QWidget):
-    def __init__(self):
+    def __init__(self, parent=None):
         super().__init__()
-
+        self.parent = parent
         self.layout = QHBoxLayout()
         search_label = QLabel("Find location: ")
         search_input = QLineEdit()
