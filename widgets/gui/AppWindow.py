@@ -8,18 +8,21 @@ class AppWindow(QMainWindow):
     def __init__(self):
         '''Initializes the main window for the application'''
         super().__init__()
-
-        # Widgets
-        location_widget = QWidget()
-        central_widget = QWidget()
-        search_bar = SearchWidget(location_widget)
-        
-        # Layout¨
-        main_layout = QVBoxLayout(central_widget)
-        self.setCentralWidget(central_widget)
-
-        # Window settings
         self.setWindowTitle("WeatherAPI")
         self.setWindowIcon(QIcon("images/weather_logo.png"))
+        self.resize(800, 600)
+
+        self.central_widget = QWidget()
+        self.layout = QVBoxLayout(self.central_widget)
+
+        # Search bar
+        self.search_bar = QToolBar()
+        self.search_bar.addWidget(SearchWidget())
+        self.search_bar.setMovable(False)
+        self.addToolBar(self.search_bar)
         
+      
+
+
+
 
