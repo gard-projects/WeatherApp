@@ -9,7 +9,7 @@ class AppWindow(QMainWindow):
         '''Initializes the main window for the application'''
         super().__init__()
         self.setWindowTitle("WeatherAPI")
-        self.setWindowIcon(QIcon("images/weather_logo.png"))
+        self.setWindowIcon(QIcon("images/app_icons/weather_logo.png"))
         self.resize(800, 600)
 
         self.central_widget = QWidget()

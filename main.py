@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QApplication
 from widgets.gui.AppWindow import AppWindow
-from engine import db_setup, db_add_location
+from query import db_setup, weather_request
+import json
 
 # Function for executing application
 def main():
@@ -11,5 +12,8 @@ def main():
 
 if __name__ == "__main__":
     db_setup()
-    db_add_location()
+    #db_add_location()
+    #data = weather_request("London")
+    #print(json.dumps(data, indent=4))
+
     main()
