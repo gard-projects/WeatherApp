@@ -28,12 +28,12 @@ def db_add_location():
     session.add(weather1)
     session.commit()
 
-def find_coordinates(location: str) -> (int,int):
+def find_coordinates(location: str) -> (float,float):
     '''Finds the coordinates of a given location (longitude and latitude)'''
     geolocator = Nominatim(user_agent="WeatherAPI")
     result = geolocator.geocode(location)
 
-    return result.latitude, result.longitude
+    return round(result.latitude, 3), round(result.longitude, 3)
 
 def weather_request(location: str, altitude=None) -> tuple:
     '''Fetches weather data for a given location'''
