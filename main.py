@@ -15,5 +15,4 @@ if __name__ == "__main__":
     #db_add_location()
     #data = weather_request("London")
     #print(json.dumps(data, indent=4))
-
     main()
