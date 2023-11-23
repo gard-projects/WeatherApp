@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QLabel, QPushButton, QVBoxLayout, QWidget, QMainWindow, QToolBar
+from PyQt5.QtWidgets import QVBoxLayout, QWidget, QMainWindow, QToolBar
 from PyQt5.QtGui import QIcon
 from widgets.location.SearchBar import SearchWidget
 from widgets.gui.WeatherResult import WeatherResult
