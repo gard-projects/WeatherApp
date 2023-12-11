@@ -1,16 +1,21 @@
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QLabel, QMenu, QAction, QMainWindow
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QLabel, QMenu, QAction
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QCoreApplication
+from widgets.location.Location import Location
 from .SearchLine import SearchLineEdit
 from widgets.gui.SettingsButton import SettingsButton
 from widgets.gui.AboutWindow import AboutWindow
+from PyQt5.QtCore import pyqtSignal
+from query import weather_request
 
 
 # Widget for searching for a location
 class SearchWidget(QWidget):
-    def __init__(self, parent=None):
+    location_request = pyqtSignal(Location)
+    change_background_color_request = pyqtSignal(bool)
+
+    def __init__(self):
         super().__init__()
-        self.parent = parent
         self.layout = QHBoxLayout()
         self.counter = 0
 
@@ -27,12 +32,16 @@ class SearchWidget(QWidget):
         self.close_app_action.triggered.connect(self.close_app)
         self.about_action = QAction(QIcon("images/app_icons/about_icon.png"), "About")
         self.about_action.triggered.connect(self.about_window)
+        self.change_mode_icon = QIcon("images/app_icons/dark_mode.png")
+        self.change_mode_state = True
+        self.change_mode_action = QAction(self.change_mode_icon, "Dark mode")
+        self.change_mode_action.triggered.connect(self.change_mode)
 
 
         # Handles settings functionality
         self.settings_button = SettingsButton()
         self.settings_menu = QMenu()
-        # self.settings_menu.addAction(close_app)
+        self.settings_menu.addAction(self.change_mode_action)
         self.settings_menu.addAction(self.about_action)
         self.settings_menu.addAction(self.close_app_action)
         
@@ -50,12 +59,19 @@ class SearchWidget(QWidget):
         self.about_window.hide()
         
     def search(self):
-        # Check if search input is empty
+        '''Provides search functionality for widget'''
         if self.search_input.text() == "":
             return
 
+        # Emit signal to update location in main window
+        searched_location = weather_request(self.search_input.text())
+        if searched_location is None:
+            self.location_request.emit(Location("", None, None, 0, 0, 0, 0))
+            self.search_input.setText("Location not found")
+            return
+        
+        self.location_request.emit(searched_location)
         self.search_input.setText("")
-        print("Test")
 
     def show_menu(self):
         '''Displays menu'''
@@ -70,4 +86,17 @@ class SearchWidget(QWidget):
         '''Opens window covering the about section'''
         self.about_window.show()
 
+    def change_mode(self):
+        '''Changes mode (light/dark)'''
+        if self.change_mode_state:
+            new_icon = QIcon("images/app_icons/light_mode.png")
+            self.change_mode_action.setText("Light mode")
+            self.change_mode_state = False
+            self.change_background_color_request.emit(False)
+        else:
+            new_icon = QIcon("images/app_icons/dark_mode.png")
+            self.change_mode_action.setText("Dark mode")
+            self.change_mode_state = True
+            self.change_background_color_request.emit(True)
         
+        self.change_mode_action.setIcon(new_icon)

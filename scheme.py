@@ -7,24 +7,24 @@ Base = declarative_base()
 class Weather(Base):
     __tablename__ = "weather"
     location_name = Column("location_name", String(30), primary_key=True)
-    air_pressure_at_sea_level = Column("air_pressure_at_sea_level", Float)
-    air_temp = Column("air_temp", Float)
-    cloud_area_fraction = Column("cloud_area_fraction", Float)
-    relative_humidity = Column("relative_humidity", Float)
-    wind_from_direction = Column("wind_from_direction", Float) # Direction in degrees
+    expires = Column("expires", String(30))
+    last_modified = Column("last_modified", String(30))
     wind_speed = Column("wind_speed", Float)
+    air_temperature = Column("air_temperature", Float)
+    weather_symbol = Column("weather_symbol", String(50))
+    percipitation_amount = Column("percipitation_amount", Float)
 
-    def __init__(self, location_name, air_pressure_at_sea_level, air_temp, cloud_area_fraction, relative_humidity, wind_from_direction, wind_speed):
-        ''' Constructor for creating a Weather object'''
+    def __init__(self, location_name, expires, last_modified, wind_speed, air_temperature, weather_symbol, percipitation_amount):
         self.location_name = location_name
-        self.air_pressure_at_sea_level = air_pressure_at_sea_level
-        self.air_temp = air_temp
-        self.cloud_area_fraction = cloud_area_fraction
-        self.relative_humidity = relative_humidity
-        self.wind_from_direction = wind_from_direction
+        self.expires = expires
+        self.last_modified = last_modified
         self.wind_speed = wind_speed
+        self.air_temperature = air_temperature
+        self.weather_symbol = weather_symbol
+        self.percipitation_amount = percipitation_amount
+        
 
     def __repr__(self):
         '''Method for representing the a weather object as string'''
-        return f"<Location: {self.location_name}, Temperature: {self.air_temp}, Wind speed: {self.wind_speed}>"
+        return f"<Location: {self.location_name}, Temperature: {self.air_temperature}, Wind speed: {self.wind_speed}>"
 
