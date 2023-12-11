@@ -20,13 +20,49 @@ class AppWindow(QMainWindow):
 
         # Search bar
         self.search_bar = QToolBar()
-        self.search_bar.addWidget(SearchWidget())
+        self.search_widget = SearchWidget()
+        # Link custom signal (update location data when searching for a new/existing location)
+        self.search_widget.location_request.connect(self.result_widget.update_location_data)
+        self.search_widget.change_background_color_request.connect(self.change_background_color)
+        self.search_bar.addWidget(self.search_widget)
         self.search_bar.setMovable(False)
         self.addToolBar(self.search_bar)
 
+        self.setStyleSheet("background-color: #ffffff;")
         self.setCentralWidget(self.central_widget)
         
-      
+    def change_background_color(self, state):
+        '''Changes background color of central widget (used for dark/white mode change)'''
+        if state:
+            # Light mode
+            self.central_widget.setStyleSheet("background-color: #ffffff;")
+            self.search_bar.setStyleSheet("background-color: #ffffff;")
+            self.result_widget.table.setStyleSheet('''
+                    QTableWidget {
+                        background-color: #ffffff;
+                        border: 2px solid #3A3238;
+                    }
+                    
+                    QHeaderView::section {
+                        background-color: #ffffff;
+                        border: 2px solid #3A3238;
+                    }    
+                ''')
+        else:
+            # Dark mode
+            self.central_widget.setStyleSheet("background-color: #1e1e1e;")
+            self.search_bar.setStyleSheet("background-color: #1e1e1e;")
+            self.result_widget.table.setStyleSheet('''
+                    QTableWidget {
+                        background-color: #1e1e1e;
+                        border: 2px solid #3A3238;
+                    }
+                    
+                    QHeaderView::section {
+                        background-color: #1e1e1e;
+                        border: 2px solid #3A3238;
+                    }    
+                ''')
 
 
 
