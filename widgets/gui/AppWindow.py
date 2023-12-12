@@ -22,7 +22,7 @@ class AppWindow(QMainWindow):
         self.search_bar = QToolBar()
         self.search_widget = SearchWidget()
         # Link custom signal (update location data when searching for a new/existing location)
-        self.search_widget.location_request.connect(self.result_widget.update_location_data)
+        self.search_widget.location_request.connect(self.result_widget.update_location)
         self.search_widget.change_background_color_request.connect(self.change_background_color)
         self.search_bar.addWidget(self.search_widget)
         self.search_bar.setMovable(False)

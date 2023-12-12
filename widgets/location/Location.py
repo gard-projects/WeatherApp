@@ -22,7 +22,7 @@ class Location:
 
     def __str__(self):
         return dedent(f"""
-            Location: {self.name}\n
+            Location: {self.location_name}\n
             Expires: {self.expire_date}\n
             Last modified: {self.last_modified}\n
             Wind speed: {self.wind_speed}\n
